@@ -1,4 +1,5 @@
 import "./App.css";
+import Post from "./post.js";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         />
       </div>
       <h1>Welcome to React </h1>
-
+      <Post />
     </div>
   );
 }
