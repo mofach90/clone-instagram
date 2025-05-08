@@ -13,6 +13,8 @@ function App() {
       </div>
       <h1>Welcome to React </h1>
       <Post />
+      <Post />
+      <Post />
     </div>
   );
 }
