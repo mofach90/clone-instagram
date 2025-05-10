@@ -1,7 +1,28 @@
+import React, { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./App.css";
 import Post from "./post.js";
 
 function App() {
+  const [posts, setPosts] = useState([
+    {
+      caption: "caption",
+      userName: "UnserName",
+      postImage:
+        "https://vastphotos.com/files/uploads/photos/10306/high-resolution-mountains-and-lakes-l.jpg?v=20220712043521",
+      avatarImage: "https://cdn.worldvectorlogo.com/logos/react-1.svg",
+      id: uuidv4(),
+    },
+    {
+      caption: "caption",
+      userName: "UnserName",
+      postImage:
+        "https://vastphotos.com/files/uploads/photos/10306/high-resolution-mountains-and-lakes-l.jpg?v=20220712043521",
+      avatarImage: "https://cdn.worldvectorlogo.com/logos/react-1.svg",
+      id: uuidv4(),
+    },
+  ]);
+
   return (
     <div className="app">
       <div className="app__header">
@@ -12,9 +33,15 @@ function App() {
         />
       </div>
       <h1>Welcome to React </h1>
-      <Post />
-      <Post />
-      <Post />
+      {posts.map((post) => (
+        <Post
+          key={post.id}
+          caption={post.caption}
+          userName={post.userName}
+          postImage={post.postImage}
+          avatarImage={post.avatarImage}
+        />
+      ))}
     </div>
   );
 }

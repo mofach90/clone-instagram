@@ -2,24 +2,24 @@ import Avatar from "@mui/material/Avatar";
 import React from "react";
 import "./post.css";
 
-function Post() {
+function Post({ avatarImage, postImage, userName, caption }) {
   return (
     <div className="post">
       <div className="post__header">
         <Avatar
           className="post__avatar"
           alt="Remy Sharp"
-          src="https://cdn.worldvectorlogo.com/logos/react-1.svg"
+          src={avatarImage}
         />
-      <h3>Username</h3>
+        <h3>Username</h3>
       </div>
       <img
         className="post__image"
-        src="https://vastphotos.com/files/uploads/photos/10306/high-resolution-mountains-and-lakes-l.jpg?v=20220712043521"
+        src={postImage}
         alt="Post"
       />
       <h4 className="post__text">
-        <strong>Username</strong> : Caption
+        <strong>{userName}</strong> : {caption}
       </h4>
     </div>
   );
