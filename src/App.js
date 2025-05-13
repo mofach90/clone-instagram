@@ -8,33 +8,22 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    function fetchData() {
-      
-      const querySnapshot = onSnapshot(
-        collection(db, "first-collection"),
-        (collection) => {
-          setPosts((posts) => []);
-          collection.forEach((doc) => {
-            console.log("Data fetched from Firestore", typeof doc.data());
+    const unsubscribe = onSnapshot(collection(db, "first-collection"), (snapshot) => {
+        const fetchedPosts = snapshot.docs.map((doc) => {
+            const data = doc.data();;
             const post = {
-              id: doc.id,
-              caption: doc.data().caption,
-              userName: doc.data().user_name,
-              postImage: doc.data().image_url,
-              avatarImage: doc.data().avatar_image,
+                id: doc.id,
+                caption: data.caption,
+                userName: data.user_name,
+                postImage: data.image_url,
+                avatarImage: data.avatar_image,
             };
-            
-            setPosts((posts) => [...posts, post]);
-            console.log("Post data", post);
-            console.log("Posts data", posts);
-          });
-        }
-      );
-      // const querySnapshot = await getDocs(collection(db, "first-collection"));
-    }
-    fetchData();
-    console.log("Data fetched from Firestore", posts);
-  }, []);
+            return post;
+        });
+        setPosts(fetchedPosts);
+    });
+    return unsubscribe;
+}, []);
 
   return (
     <div className="app">
@@ -46,9 +35,9 @@ function App() {
         />
       </div>
       <h1>Welcome to React </h1>
-      {posts.map((post, index) => (
+      {posts.map((post) => (
         <Post
-          key={index}
+          key={post.id}
           caption={post.caption}
           userName={post.userName}
           postImage={post.postImage}
