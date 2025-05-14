@@ -19,4 +19,8 @@
   height: 50px;
   
 }
+.app__signup {
+  display: flex;
+  flex-direction: column;
+}
 

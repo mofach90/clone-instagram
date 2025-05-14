@@ -1,12 +1,12 @@
+import { Button, Input } from "@mui/material";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
-import { db } from "./firebase.js";
+import { db, auth } from "./firebase.js";
 import Post from "./post.js";
 
 const style = {
@@ -24,6 +24,24 @@ const style = {
 function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        const uid = user.uid;
+        console.log("User is signed in:", uid);
+        // ...
+      } else {
+        // User is signed out
+        console.log("User is signed out");
+      }
+    });
+
+  }, []);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -46,9 +64,28 @@ function App() {
     return unsubscribe;
   }, []);
 
+  const signUp = (e) => {
+    e.preventDefault();
+    console.log("Sign Up");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage); 
+        alert(errorMessage);
+        // ..
+      });
+  };
+
   return (
     <div className="app">
-      <Button onClick={() => setOpen(true)}>Open modal</Button>
+      <Button onClick={() => setOpen(true)}>Sign Up</Button>
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -56,12 +93,24 @@ function App() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <form className="app__signup">
+            <Input
+              type="text"
+              placeholder="Username"
+              onChange={(e) => setUserName(e.target.value)}
+            />
+            <Input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Button type="submit" onClick={signUp}>Sign Up</Button>
+          </form>
         </Box>
       </Modal>
       <div className="app__header">
