@@ -1,13 +1,18 @@
 import { Button, Input } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
-import { db, auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 import Post from "./post.js";
+
+import { updateProfile } from "firebase/auth";
 
 const style = {
   position: "absolute",
@@ -27,16 +32,40 @@ function App() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         console.log("User is signed in:", uid);
+        setUser(user);
+        if (user.displayName) {
+          //
+        } else {
+          // If we just created a user...
+          console.log("User created:", user);
+          updateProfile(auth.currentUser, {
+            displayName: userName,
+          })
+            .then(() => {
+              // Profile updated!
+              console.log("Profile updated:", userName);
+              // ...
+            })
+            .catch((error) => {
+              // An error occurred
+              console.log("Error updating profile:", error);
+              // ...
+            });
+        }
       } else {
         console.log("User is signed out");
+        setUser(null);
       }
     });
-
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   useEffect(() => {
@@ -73,7 +102,7 @@ function App() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage); 
+        console.log(errorCode, errorMessage);
         alert(errorMessage);
         // ..
       });
@@ -105,7 +134,9 @@ function App() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Button type="submit" onClick={signUp}>Sign Up</Button>
+            <Button type="submit" onClick={signUp}>
+              Sign Up
+            </Button>
           </form>
         </Box>
       </Modal>
