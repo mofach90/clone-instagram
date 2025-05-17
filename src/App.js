@@ -34,6 +34,9 @@ function App() {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   useEffect(() => {
+    console.log("open", open);
+  }, [open]);
+  useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
@@ -106,11 +109,26 @@ function App() {
         alert(errorMessage);
         // ..
       });
+    setOpen(false);
+  };
+  const signOut = (e) => {
+    auth.signOut().catch((error) => {
+      // An error happened.
+      console.log("Error signing out:", error);
+    });
+    console.log("Sign Out");
   };
 
   return (
     <div className="app">
-      <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      {user ? (
+        <>
+          <Button onClick={signOut}>LOGOUTy</Button>
+          <Button onClick={() => console.log("heydsjfkjh")}>test</Button>
+        </>
+      ) : (
+        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+      )}
       <Modal
         open={open}
         onClose={() => setOpen(false)}
@@ -134,6 +152,7 @@ function App() {
               placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
+
             <Button type="submit" onClick={signUp}>
               Sign Up
             </Button>
