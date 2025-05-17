@@ -12,7 +12,7 @@ import "./App.css";
 import { auth, db } from "./firebase.js";
 import Post from "./post.js";
 
-import { updateProfile } from "firebase/auth";
+import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const style = {
   position: "absolute",
@@ -29,6 +29,7 @@ const style = {
 function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = React.useState(false);
+  const [openLogin, setOpenLogin] = React.useState(false);
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -111,7 +112,26 @@ function App() {
       });
     setOpen(false);
   };
-  const signOut = (e) => {
+  const signIn = (e) => {
+    e.preventDefault();
+    console.log("Sign In");
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        alert(errorMessage);
+        // ..
+      });
+    setOpenLogin(false);
+  };
+  const signOut = () => {
     auth.signOut().catch((error) => {
       // An error happened.
       console.log("Error signing out:", error);
@@ -123,11 +143,13 @@ function App() {
     <div className="app">
       {user ? (
         <>
-          <Button onClick={signOut}>LOGOUTy</Button>
-          <Button onClick={() => console.log("heydsjfkjh")}>test</Button>
+          <Button onClick={signOut}>LOGOUT</Button>
         </>
       ) : (
-        <Button onClick={() => setOpen(true)}>Sign Up</Button>
+        <>
+          <Button onClick={() => setOpen(true)}>Sign Up</Button>
+          <Button onClick={() => setOpenLogin(true)}>Log In</Button>
+        </>
       )}
       <Modal
         open={open}
@@ -155,6 +177,31 @@ function App() {
 
             <Button type="submit" onClick={signUp}>
               Sign Up
+            </Button>
+          </form>
+        </Box>
+      </Modal>
+      <Modal
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <form className="app__signup">
+            <Input
+              type="text"
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Input
+              type="password"
+              placeholder="Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <Button type="submit" onClick={signIn}>
+              Log In
             </Button>
           </form>
         </Box>
