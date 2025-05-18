@@ -4,6 +4,8 @@ import Modal from "@mui/material/Modal";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
 } from "firebase/auth";
 import { collection, onSnapshot } from "firebase/firestore";
 import * as React from "react";
@@ -11,8 +13,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { auth, db } from "./firebase.js";
 import Post from "./post.js";
-
-import { signInWithEmailAndPassword, updateProfile } from "firebase/auth";
+import UploadImages from "./uploadImages.js";
 
 const style = {
   position: "absolute",
@@ -141,6 +142,7 @@ function App() {
 
   return (
     <div className="app">
+      <UploadImages />
       {user ? (
         <>
           <Button onClick={signOut}>LOGOUT</Button>
