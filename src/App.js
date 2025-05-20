@@ -71,7 +71,7 @@ function App() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [user, userName]);
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
@@ -121,6 +121,7 @@ function App() {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        setUser(user);
         // ...
       })
       .catch((error) => {
@@ -142,7 +143,12 @@ function App() {
 
   return (
     <div className="app">
-      <UploadImages />
+      {user?.displayName ? (
+        <UploadImages userName={user.displayName} />
+      ) : (
+        <div>"Please login first"</div>
+      )}
+
       {user ? (
         <>
           <Button onClick={signOut}>LOGOUT</Button>
