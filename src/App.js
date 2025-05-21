@@ -7,7 +7,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import "./App.css";
@@ -74,8 +74,9 @@ function App() {
   }, [user, userName]);
 
   useEffect(() => {
+    const q = query(collection(db, "first-collection"), orderBy("timestamp", "desc"));
     const unsubscribe = onSnapshot(
-      collection(db, "first-collection"),
+      q,
       (snapshot) => {
         const fetchedPosts = snapshot.docs.map((doc) => {
           const data = doc.data();
