@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
-import { Timestamp } from "firebase/firestore";
-import { ref, uploadBytesResumable } from "firebase/storage";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { db, storage } from "./firebase.js";
 
@@ -32,22 +32,20 @@ const UploadImages = ({ props }) => {
           console.error("Error uploading image:", error);
         },
         () => {
-          uploadTask.snapshot
-            .ref("images")
-            .getDownloadURL()
-            .then((downloadURL) => {
-              console.log("File available at", downloadURL);
-              db.collection("posts").add({
-                timestamp: Timestamp.now(),
-                caption: caption,
-                imageUrl: downloadURL,
-                username: props?.user?.displayName,
-              });
-              setCaption("");
-              setImage(null);
-              setProgress(0);
-              // Save the downloadURL to your database along with the caption
+          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+            console.log("File available at", downloadURL);
+            const docRef = await addDoc(collection(db, "first-collection"), {
+              timestamp: Timestamp.now(),
+              caption: "caption",
+              image_url: downloadURL,
+              user_name:" props?.user?.displayName",
             });
+            console.log("Document written with ID: ", docRef.id);
+            setCaption("");
+            setImage(null);
+            setProgress(0);
+            // Save the downloadURL to your database along with the caption
+          });
         }
       );
     }
