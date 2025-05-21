@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { Timestamp } from "firebase/firestore";
-import { ref } from "firebase/storage";
+import { ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { db, storage } from "./firebase.js";
 
@@ -19,7 +19,7 @@ const UploadImages = ({ props }) => {
       return;
     } else {
       const storageRef = ref(storage, `images/${image.name}`);
-      const uploadTask = storageRef.put(image);
+      const uploadTask = uploadBytesResumable(storageRef, image);
       uploadTask.on(
         "state_changed",
         (snapshot) => {

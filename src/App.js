@@ -79,6 +79,7 @@ function App() {
       (snapshot) => {
         const fetchedPosts = snapshot.docs.map((doc) => {
           const data = doc.data();
+          console.log("data", data);
           const post = {
             id: doc.id,
             caption: data.caption,

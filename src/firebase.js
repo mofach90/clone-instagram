@@ -9,13 +9,13 @@ import { getStorage } from "firebase/storage";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyBaU8qZl0EU52NtwgxE2t_q5u1hqNuClDw",
-  authDomain: "mo-instagram-clone.firebaseapp.com",
-  projectId: "mo-instagram-clone",
-  storageBucket: "mo-instagram-clone.firebasestorage.app",
-  messagingSenderId: "105841606272",
-  appId: "1:105841606272:web:b8f3ca9b2204640cfef065",
-  measurementId: "G-3XYWM2VJD7",
+  apiKey: "AIzaSyCLEp_Y1C9tDfSPnVUlZ6E7uHI9AdhzCdA",
+  authDomain: "cpl-mo.firebaseapp.com",
+  projectId: "cpl-mo",
+  storageBucket: "cpl-mo.firebasestorage.app",
+  messagingSenderId: "544306654076",
+  appId: "1:544306654076:web:adad05e3c54cfd80d892f9",
+  measurementId: "G-CPZH2E9K04"
 };
 
 // Initialize Firebase
@@ -23,4 +23,5 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const storage = getStorage(app);
 const auth = getAuth(app);
+console.log("Firebase initialized", auth, db, storage);
 export { auth, db, storage };
