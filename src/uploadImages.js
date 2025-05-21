@@ -36,9 +36,9 @@ const UploadImages = ({ props }) => {
             console.log("File available at", downloadURL);
             const docRef = await addDoc(collection(db, "first-collection"), {
               timestamp: Timestamp.now(),
-              caption: "caption",
+              caption: caption ?? "No Caption",
               image_url: downloadURL,
-              user_name:" props?.user?.displayName",
+              user_name: props?.userName ?? "Anonymous",
             });
             console.log("Document written with ID: ", docRef.id);
             setCaption("");
@@ -56,7 +56,7 @@ const UploadImages = ({ props }) => {
       <input
         type="text"
         placeholder="Enter your Caption ..."
-        onChange={(e) => setCaption(e.target.text)}
+        onChange={(e) => setCaption(e.target.value)}
       />
       <input type="file" onChange={handelChange} />
       <Button onClick={handleUpload}>Upload</Button>
