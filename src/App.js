@@ -74,25 +74,25 @@ function App() {
   }, [user, userName]);
 
   useEffect(() => {
-    const q = query(collection(db, "first-collection"), orderBy("timestamp", "desc"));
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const fetchedPosts = snapshot.docs.map((doc) => {
-          const data = doc.data();
-          console.log("data", data);
-          const post = {
-            id: doc.id,
-            caption: data.caption,
-            userName: data.user_name,
-            postImage: data.image_url,
-            avatarImage: data.avatar_image,
-          };
-          return post;
-        });
-        setPosts(fetchedPosts);
-      }
+    const q = query(
+      collection(db, "first-collection"),
+      orderBy("timestamp", "desc")
     );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const fetchedPosts = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        console.log("data", data);
+        const post = {
+          id: doc.id,
+          caption: data.caption,
+          userName: data.user_name,
+          postImage: data.image_url,
+          avatarImage: data.avatar_image,
+        };
+        return post;
+      });
+      setPosts(fetchedPosts);
+    });
     return unsubscribe;
   }, []);
 
@@ -145,12 +145,6 @@ function App() {
 
   return (
     <div className="app">
-      {user?.displayName ? (
-        <UploadImages userName={user.displayName} />
-      ) : (
-        <div>"Please login first"</div>
-      )}
-
       {user ? (
         <>
           <Button onClick={signOut}>LOGOUT</Button>
@@ -233,6 +227,11 @@ function App() {
           avatarImage={post.avatarImage}
         />
       ))}
+      {user?.displayName ? (
+        <UploadImages userName={user.displayName} />
+      ) : (
+        <div>"Please login first"</div>
+      )}
     </div>
   );
 }

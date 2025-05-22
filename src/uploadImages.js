@@ -3,6 +3,7 @@ import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { db, storage } from "./firebase.js";
+import "./uploadImage.css";
 
 const UploadImages = ({ props }) => {
   const [caption, setCaption] = useState("");
@@ -51,8 +52,8 @@ const UploadImages = ({ props }) => {
     }
   };
   return (
-    <div>
-      <progress value={progress} max="100" />
+    <div className="upload__images">
+      <progress className="progress__bar" value={progress} max="100" />
       <input
         type="text"
         placeholder="Enter your Caption ..."
