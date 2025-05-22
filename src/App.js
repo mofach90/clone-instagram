@@ -145,92 +145,108 @@ function App() {
 
   return (
     <div className="app">
-      {user ? (
-        <>
-          <Button onClick={signOut}>LOGOUT</Button>
-        </>
-      ) : (
-        <>
-          <Button onClick={() => setOpen(true)}>Sign Up</Button>
-          <Button onClick={() => setOpenLogin(true)}>Log In</Button>
-        </>
-      )}
-      <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <form className="app__signup">
-            <Input
-              type="text"
-              placeholder="Username"
-              onChange={(e) => setUserName(e.target.value)}
-            />
-            <Input
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Button type="submit" onClick={signUp}>
-              Sign Up
-            </Button>
-          </form>
-        </Box>
-      </Modal>
-      <Modal
-        open={openLogin}
-        onClose={() => setOpenLogin(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <form className="app__signup">
-            <Input
-              type="text"
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Input
-              type="password"
-              placeholder="Password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-
-            <Button type="submit" onClick={signIn}>
-              Log In
-            </Button>
-          </form>
-        </Box>
-      </Modal>
       <div className="app__header">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png"
           alt="headerImage"
           className="app__headerImage"
         />
+        {user ? (
+          <>
+            <Button onClick={signOut}>LOGOUT</Button>
+          </>
+        ) : (
+          <div className="app__login">
+            <Button onClick={() => setOpen(true)}>Sign Up</Button>
+            <Button onClick={() => setOpenLogin(true)}>Log In</Button>
+          </div>
+        )}
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <form className="app__signup">
+              <Input
+                type="text"
+                placeholder="Username"
+                onChange={(e) => setUserName(e.target.value)}
+              />
+              <Input
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <Button type="submit" onClick={signUp}>
+                Sign Up
+              </Button>
+            </form>
+          </Box>
+        </Modal>
+        <Modal
+          open={openLogin}
+          onClose={() => setOpenLogin(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <form className="app__signup">
+              <Input
+                type="text"
+                placeholder="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <Input
+                type="password"
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+
+              <Button type="submit" onClick={signIn}>
+                Log In
+              </Button>
+            </form>
+          </Box>
+        </Modal>
       </div>
-      <h1>Welcome to React </h1>
-      {posts.map((post) => (
-        <Post
-          key={post.id}
-          caption={post.caption}
-          userName={post.userName}
-          postImage={post.postImage}
-          avatarImage={post.avatarImage}
-        />
-      ))}
+
+      <div className="app__posts">
+        {posts.map((post) => (
+          <Post
+            key={post.id}
+            caption={post.caption}
+            userName={post.userName}
+            postImage={post.postImage}
+            avatarImage={post.avatarImage}
+          />
+        ))}
+      </div>
+
       {user?.displayName ? (
         <UploadImages userName={user.displayName} />
       ) : (
-        <div>"Please login first"</div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            border: "solid 2px red ",
+            width: "20%",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginBottom: "40px",
+            padding: "3px",
+          }}
+        >
+          "Please login first"
+        </div>
       )}
     </div>
   );
