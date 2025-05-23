@@ -45,8 +45,7 @@ const UploadImages = ({ props }) => {
             setCaption("");
             setImage(null);
             setProgress(0);
-            // Save the downloadURL to your database along with the caption
-          });
+            console.log("Image uploaded successfully");          });
         }
       );
     }
