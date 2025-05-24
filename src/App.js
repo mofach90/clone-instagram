@@ -227,6 +227,7 @@ function App() {
             userName={post.userName}
             postImage={post.postImage}
             avatarImage={post.avatarImage}
+            user={user}
           />
         ))}
       </div>

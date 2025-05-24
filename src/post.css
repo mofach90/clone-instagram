@@ -36,7 +36,17 @@
 }
 .comment__input {
   flex: 1;
+  border:none;
+  border-top: 1px solid lightgray;
 }
-.comment__submit {
+.comment__button {
   flex: 0;
+  border:none;
+  border-top: 1px solid lightgray;
+  color: blue
+}
+.post__comment {
+  padding: 10px;
+  border:none;
+  border-bottom: 1px solid lightgray;
 }

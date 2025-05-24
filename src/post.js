@@ -1,10 +1,10 @@
 import Avatar from "@mui/material/Avatar";
-import { addDoc, collection, onSnapshot } from "firebase/firestore";
+import { addDoc, collection, onSnapshot, Timestamp } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "./firebase.js";
 import "./post.css";
 
-function Post({ avatarImage, postImage, userName, caption, postId }) {
+function Post({ avatarImage, postImage, userName, caption, postId, user }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
@@ -42,8 +42,9 @@ function Post({ avatarImage, postImage, userName, caption, postId }) {
       "comments"
     );
     addDoc(commentsCollectionRef, {
-      userName: userName,
+      userName: user?.displayName || "Anonymous", // Use displayName or fallback to "Anonymous"
       text: comment,
+      Timestamp: Firebase.firestore.Timestamp.now(), // Add a timestamp for the comment
     })
       .then(() => {
         console.log("Comment added successfully");
@@ -69,6 +70,7 @@ function Post({ avatarImage, postImage, userName, caption, postId }) {
           type="text"
           placeholder="Add your comment..."
           onChange={(e) => setComment(e.target.value)}
+          value={comment}
         />
         <button
           className="comment__button"
@@ -80,7 +82,7 @@ function Post({ avatarImage, postImage, userName, caption, postId }) {
       </form>
       <div className="post__comments">
         {comments.map((comment) => (
-          <p key={comment.id}>
+          <p key={comment.id} className="post__comment">
             <strong>{comment.userName}</strong> : {comment.text}
           </p>
         ))}
