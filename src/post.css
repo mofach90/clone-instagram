@@ -25,3 +25,18 @@
   margin-bottom: 45px;
   width: 100%;
 }
+
+.post__comments {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.post__commentBox{
+  display: flex;
+}
+.comment__input {
+  flex: 1;
+}
+.comment__submit {
+  flex: 0;
+}

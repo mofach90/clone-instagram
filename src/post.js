@@ -1,38 +1,58 @@
 import Avatar from "@mui/material/Avatar";
-import { collection, getDocs } from "firebase/firestore";
+import { addDoc, collection, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "./firebase.js";
 import "./post.css";
 
 function Post({ avatarImage, postImage, userName, caption, postId }) {
   const [comments, setComments] = useState([]);
+  const [comment, setComment] = useState("");
 
   useEffect(() => {
-    console.log("iam in");
-    // Ensure postId is defined before making the Firestore call
     if (postId) {
-      const commentsCollectionRef = collection(db, "first-collection", `${postId}`, "comments");
-      getDocs(commentsCollectionRef).then(
-        (querySnapshot) => {
-          console.log("Comments fetched:", querySnapshot.docs);
-          const commentsData = [];
-          querySnapshot.forEach((doc) => {
-            console.log("Comment ID:", doc.id);
-            console.log(doc.id, " => ", doc.data());
-            // 👇 **MISTAKE WAS HERE: This line was commented out**
-            commentsData.push({ id: doc.id, comment: doc.data() }); // Assuming doc.data() holds the comment object
-          });
-          // 👇 **MISTAKE WAS HERE: This line was also commented out**
-          setComments(commentsData);
-        }
-      ).catch((error) => {
-        // It's good practice to catch potential errors
-        console.error("Error fetching comments: ", error);
+      const commentsCollectionRef = collection(
+        db,
+        "first-collection",
+        postId,
+        "comments"
+      );
+      onSnapshot(commentsCollectionRef, (querySnapshot) => {
+        const commentsData = querySnapshot.docs.map((doc) => {
+          return {
+            userName: doc.data().userName,
+            text: doc.data().text,
+            id: doc.id,
+          };
+        });
+        setComments(commentsData);
       });
     }
     console.log("iam iout");
   }, [postId]); // The dependency array is correct, re-running when postId changes.
-
+  const handelSubmitComment = (e) => {
+    e.preventDefault(); // Prevent the default form submission behavior
+    if (comment.trim() === "") {
+      alert("Comment cannot be empty");
+      return;
+    }
+    const commentsCollectionRef = collection(
+      db,
+      "first-collection",
+      postId,
+      "comments"
+    );
+    addDoc(commentsCollectionRef, {
+      userName: userName,
+      text: comment,
+    })
+      .then(() => {
+        console.log("Comment added successfully");
+        setComment(""); // Clear the comment input after submission
+      })
+      .catch((error) => {
+        console.error("Error adding comment: ", error);
+      });
+  };
   return (
     <div className="post">
       <div className="post__header">
@@ -43,6 +63,28 @@ function Post({ avatarImage, postImage, userName, caption, postId }) {
       <h4 className="post__text">
         <strong>{userName}</strong> : {caption}
       </h4>
+      <form className="post__commentBox">
+        <input
+          className="comment__input"
+          type="text"
+          placeholder="Add your comment..."
+          onChange={(e) => setComment(e.target.value)}
+        />
+        <button
+          className="comment__button"
+          type="submit"
+          onClick={handelSubmitComment}
+        >
+          Submit
+        </button>
+      </form>
+      <div className="post__comments">
+        {comments.map((comment) => (
+          <p key={comment.id}>
+            <strong>{comment.userName}</strong> : {comment.text}
+          </p>
+        ))}
+      </div>
     </div>
   );
 }
