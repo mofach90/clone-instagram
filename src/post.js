@@ -44,7 +44,7 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
     addDoc(commentsCollectionRef, {
       userName: user?.displayName || "Anonymous", // Use displayName or fallback to "Anonymous"
       text: comment,
-      Timestamp: Firebase.firestore.Timestamp.now(), // Add a timestamp for the comment
+      Timestamp: Timestamp.now(), // Add a timestamp for the comment
     })
       .then(() => {
         console.log("Comment added successfully");
