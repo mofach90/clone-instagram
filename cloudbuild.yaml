@@ -5,8 +5,8 @@ steps:
       - "-c"
       - |
         IMAGE_TAG="03"
-        echo "[INFO] Finished Docker build"
-        echo "[SUCCESS] Finished Docker build"
-        echo "[INFO] Finished Docker push"
-        echo "[SUCCESS] Finished Docker push"
+        docker build -t europe-west3-docker.pkg.dev/cpl-mo/test-docker-registry/prodreactnodecontainer:${IMAGE_TAG} . &&
+        echo "✅ Finished Docker build"
+        docker push europe-west3-docker.pkg.dev/cpl-mo/test-docker-registry/prodreactnodecontainer:${IMAGE_TAG} &&
+        echo "✅ Finished Docker push"
         
