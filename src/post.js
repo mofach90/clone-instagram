@@ -62,6 +62,13 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
       <h4 className="post__text">
         <strong>{userName}</strong> : {caption}
       </h4>
+      <div className="post__comments">
+        {comments.map((comment) => (
+          <p key={comment.id} className="post__comment">
+            <strong>{comment.userName}</strong> : {comment.text}
+          </p>
+        ))}
+      </div>
       <form className="post__commentBox">
         <input
           className="comment__input"
@@ -78,13 +85,6 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
           Submit
         </button>
       </form>
-      <div className="post__comments">
-        {comments.map((comment) => (
-          <p key={comment.id} className="post__comment">
-            <strong>{comment.userName}</strong> : {comment.text}
-          </p>
-        ))}
-      </div>
     </div>
   );
 }

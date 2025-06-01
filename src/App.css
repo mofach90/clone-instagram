@@ -18,6 +18,8 @@
 }
 
 .app__header {
+  position: sticky;
+  top: 0;
   background-color: #fafafa;
   padding: 20px;
   display: flex;
