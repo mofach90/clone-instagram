@@ -1,5 +1,12 @@
 import Avatar from "@mui/material/Avatar";
-import { addDoc, collection, onSnapshot, Timestamp, query, orderBy } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  Timestamp,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "./firebase.js";
 import "./post.css";
@@ -69,22 +76,24 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
           </p>
         ))}
       </div>
-      <form className="post__commentBox">
-        <input
-          className="comment__input"
-          type="text"
-          placeholder="Add your comment..."
-          onChange={(e) => setComment(e.target.value)}
-          value={comment}
-        />
-        <button
-          className="comment__button"
-          type="submit"
-          onClick={handelSubmitComment}
-        >
-          Submit
-        </button>
-      </form>
+      {user ? (
+        <form className="post__commentBox">
+          <input
+            className="comment__input"
+            type="text"
+            placeholder="Add your comment..."
+            onChange={(e) => setComment(e.target.value)}
+            value={comment}
+          />
+          <button
+            className="comment__button"
+            type="submit"
+            onClick={handelSubmitComment}
+          >
+            Submit
+          </button>
+        </form>
+      ) : null}
     </div>
   );
 }
