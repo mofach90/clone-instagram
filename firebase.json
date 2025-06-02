@@ -1,15 +1,16 @@
 {
-  "apphosting": {
-    "backendId": "insta-clone-back",
-    "rootDir": "build",
+  "hosting": {
+    "public": "build",
     "ignore": [
-      "node_modules",
-      ".git",
-      "firebase-debug.log",
-      "firebase-debug.*.log",
-      "functions",
-      "Dockerfile",
-      "cloudbuild.yaml"
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   }
 }
