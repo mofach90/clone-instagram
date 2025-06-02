@@ -1,0 +1,15 @@
+{
+  "apphosting": {
+    "backendId": "insta-clone-back",
+    "rootDir": "build",
+    "ignore": [
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions",
+      "Dockerfile",
+      "cloudbuild.yaml"
+    ]
+  }
+}
