@@ -9,17 +9,16 @@ const AuthDisplay = ({ user, setUser, setUserName }) => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
-  const signOut = () => {
+  const SignOut = () => {
     auth.signOut().catch((error) => {
       console.log("Error signing out:", error);
     });
-    console.log("Sign Out");
   };
 
   return (
     <>
       {user ? (
-        <Button onClick={signOut}>LOGOUT</Button>
+        <Button onClick={SignOut}>LOGOUT</Button>
       ) : (
         <div className="app__login">
           <Button onClick={() => setOpen(true)}>Sign Up</Button>

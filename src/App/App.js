@@ -89,7 +89,6 @@ function App() {
       <Header
         user={user}
         setUser={setUser}
-        userName={userName}
         setUserName={setUserName}
       />
       <div className="app__posts">

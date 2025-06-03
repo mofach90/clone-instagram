@@ -22,12 +22,10 @@ const SignupDisplay = ({ open, setUserName, setOpen , setUser }) => {
   const [password, setPassword] = useState("");
   const signUp = (e) => {
     e.preventDefault();
-    console.log("Sign Up");
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
         setUser(user);
-        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
