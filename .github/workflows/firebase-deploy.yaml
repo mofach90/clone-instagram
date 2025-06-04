@@ -21,15 +21,14 @@ jobs:
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Disable Treating warnings as errors
-        run: echo ${CI}
 
       - name: Build Application
-        run: export CI=false && echo ${CI} && npm run build
+        run: npm run build
+        env:
+          CI: false
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          # repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
           projectId: "cpl-mo"
