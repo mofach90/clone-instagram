@@ -22,7 +22,7 @@ jobs:
         run: npm install --legacy-peer-deps
 
       - name: Disable Treating warnings as errors
-        run: process.env.CI=false
+        run: CI=false
 
       - name: Build Application
         run: npm run build
