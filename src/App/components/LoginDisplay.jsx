@@ -4,23 +4,13 @@ import Modal from "@mui/material/Modal";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../../firebase";
+import { style } from "../../styles/styles.js";
 import "../App.css";
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 const LoginDisplay = ({ openLogin, setOpenLogin, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   const signIn = (e) => {
     e.preventDefault();
     console.log("Sign In");
