@@ -1,4 +1,3 @@
-import "../App.css";
 import AuthDisplay from "./AuthDisplay";
 
 const Header = ({ user, setUser, setUserName }) => {

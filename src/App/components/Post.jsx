@@ -8,8 +8,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "./firebase.js";
-import "./post.css";
+import { db } from "../../firebase.js";
+import "../../styles/post.css"; 
 
 function Post({ avatarImage, postImage, userName, caption, postId, user }) {
   const [comments, setComments] = useState([]);
@@ -99,4 +99,3 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
 }
 
 export default Post;
-// export default Post;

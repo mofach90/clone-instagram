@@ -1,7 +1,6 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { auth } from "../../firebase";
-import "../App.css";
 import LoginDisplay from "./LoginDisplay";
 import SignupDisplay from "./SignupDisplay";
 

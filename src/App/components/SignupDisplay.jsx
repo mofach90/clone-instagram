@@ -4,7 +4,6 @@ import Modal from "@mui/material/Modal";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../../firebase";
-import "../App.css";
 import { style } from "../../styles/styles.js";
 
 
