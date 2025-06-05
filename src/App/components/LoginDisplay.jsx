@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../../config/firebase.js";
 import { style } from "../../styles/styles.js";
 
 const LoginDisplay = ({ openLogin, setOpenLogin, setUser }) => {

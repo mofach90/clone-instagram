@@ -1,7 +1,7 @@
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import * as React from "react";
 import { useEffect, useState } from "react";
-import { auth } from "../firebase.js";
+import { auth } from "../config/firebase.js";
 import "../styles/App.css";
 import Header from "./components/Header.jsx";
 import Posts from "./components/Posts.jsx";

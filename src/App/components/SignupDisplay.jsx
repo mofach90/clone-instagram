@@ -3,11 +3,10 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "../../firebase";
+import { auth } from "../../config/firebase.js";
 import { style } from "../../styles/styles.js";
 
-
-const SignupDisplay = ({ open, setUserName, setOpen , setUser }) => {
+const SignupDisplay = ({ open, setUserName, setOpen, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const signUp = (e) => {

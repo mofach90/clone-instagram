@@ -8,8 +8,8 @@ import {
   Timestamp,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { db } from "../../firebase.js";
-import "../../styles/post.css"; 
+import { db } from "../../config/firebase.js";
+import "../../styles/post.css";
 
 function Post({ avatarImage, postImage, userName, caption, postId, user }) {
   const [comments, setComments] = useState([]);
