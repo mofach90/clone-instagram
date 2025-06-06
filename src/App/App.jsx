@@ -14,30 +14,22 @@ function App() {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
-        console.log("User is signed in:", uid);
         setUser(user);
         if (user.displayName) {
-          //
+          // that means , user has a profile, nothing to do
         } else {
-          // If we just created a user...
-          console.log("User created:", user);
+          // that means user signed up for the first time so i need to update his displayName 
           updateProfile(auth.currentUser, {
             displayName: userName,
           })
             .then(() => {
-              // Profile updated!
               console.log("Profile updated:", userName);
-              // ...
             })
             .catch((error) => {
-              // An error occurred
               console.log("Error updating profile:", error);
-              // ...
             });
         }
       } else {
-        console.log("User is signed out");
         setUser(null);
       }
     });
