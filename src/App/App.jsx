@@ -1,22 +1,42 @@
 import { onAuthStateChanged, updateProfile } from "firebase/auth";
 import * as React from "react";
 import { useEffect, useState } from "react";
+import { auth } from "../config/firebase.js";
 import "../styles/App.css";
 import Header from "./components/Header.jsx";
 import Posts from "./components/Posts.jsx";
 import UploadImages from "./components/UploadImages.jsx";
-import authenticationListner from "./listner/authListen.js"
 
 function App() {
   const [userName, setUserName] = useState("");
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    authenticationListner(userName, user, setUserName)
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+        if (user.displayName) {
+          // that means , user has a profile, nothing to do
+        } else {
+          // that means user signed up for the first time so i need to update his displayName 
+          updateProfile(auth.currentUser, {
+            displayName: userName,
+          })
+            .then(() => {
+              console.log("Profile updated:", userName);
+            })
+            .catch((error) => {
+              console.log("Error updating profile:", error);
+            });
+        }
+      } else {
+        setUser(null);
+      }
+    });
     return () => {
-      authenticationListner();
+      unsubscribe();
     };
-  }, [user, userName]);
+  }, []);
 
   return (
     <div className="app">
