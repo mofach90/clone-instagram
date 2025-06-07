@@ -24,20 +24,21 @@ const Posts = ({ user }) => {
         return post;
       });
       setPosts(fetchedPosts);
-    });
+    },(error) => {
+      console.log(error);
+    }
+  
+  );
     return unsubscribe;
   }, []);
+
   return (
     <div className="app__posts">
       {posts.map((post) => (
         <Post
           key={post.id}
-          postId={post.id}
-          caption={post.caption}
-          userName={post.userName}
-          postImage={post.postImage}
-          avatarImage={post.avatarImage}
           user={user}
+          postData= {post}
         />
       ))}
     </div>

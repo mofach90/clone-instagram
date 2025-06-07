@@ -10,21 +10,22 @@ const LoginDisplay = ({ openLogin, setOpenLogin, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const signIn = (e) => {
+  const signIn = async (e) => {
     e.preventDefault();
     console.log("Sign In");
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        alert(errorMessage);
-      });
-    setOpenLogin(false);
+    try {
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      setUser(userCredential.user);
+      setOpenLogin(false);
+    } catch (error) {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      alert(errorMessage);
+    }
   };
   return (
     <Modal

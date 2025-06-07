@@ -11,14 +11,14 @@ import React, { useEffect, useState } from "react";
 import { db } from "../../config/firebase.js";
 import "../../styles/post.css";
 
-function Post({ avatarImage, postImage, userName, caption, postId, user }) {
+function Post({ user, postData }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
 
   useEffect(() => {
-    if (postId) {
+    if (postData.postId) {
       const commentsCollectionRef = query(
-        collection(db, "first-collection", postId, "comments"),
+        collection(db, "first-collection", postData.postId, "comments"),
         orderBy("Timestamp", "desc")
       );
       onSnapshot(commentsCollectionRef, (querySnapshot) => {
@@ -33,7 +33,7 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
       });
     }
     console.log("iam iout");
-  }, [postId]); // The dependency array is correct, re-running when postId changes.
+  }, [postData.postId]); // The dependency array is correct, re-running when postId changes.
   const handelSubmitComment = (e) => {
     e.preventDefault(); // Prevent the default form submission behavior
     if (comment.trim() === "") {
@@ -43,7 +43,7 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
     const commentsCollectionRef = collection(
       db,
       "first-collection",
-      postId,
+      postData.postId,
       "comments"
     );
     addDoc(commentsCollectionRef, {
@@ -62,12 +62,12 @@ function Post({ avatarImage, postImage, userName, caption, postId, user }) {
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar" alt="Remy Sharp" src={avatarImage} />
+        <Avatar className="post__avatar" alt="Remy Sharp" src={postData.avatarImage} />
         <h3>Username</h3>
       </div>
-      <img className="post__image" src={postImage} alt="Post" />
+      <img className="post__image" src={postData.postImage} alt="Post" />
       <h4 className="post__text">
-        <strong>{userName}</strong> : {caption}
+        <strong>{postData.userName}</strong> : {postData.caption}
       </h4>
       <div className="post__comments">
         {comments.map((comment) => (
