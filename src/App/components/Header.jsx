@@ -1,6 +1,6 @@
 import AuthDisplay from "./AuthDisplay";
 
-const Header = ({ user, setUser, setUserName }) => {
+const Header = ({ user, setUser }) => {
   return (
     <div className="app__header">
       <img

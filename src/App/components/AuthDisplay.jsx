@@ -4,14 +4,16 @@ import { auth } from "../../config/firebase";
 import LoginDisplay from "./LoginDisplay";
 import SignupDisplay from "./SignupDisplay";
 
-const AuthDisplay = ({ user, setUser, setUserName }) => {
+const AuthDisplay = ({ user, setUser }) => {
   const [open, setOpen] = useState(false);
   const [openLogin, setOpenLogin] = useState(false);
 
-  const SignOut = () => {
-    auth.signOut().catch((error) => {
+  const SignOut = async () => {
+    try {
+      await auth.signOut();
+    } catch (error) {
       console.log("Error signing out:", error);
-    });
+    }
   };
 
   return (
@@ -24,11 +26,7 @@ const AuthDisplay = ({ user, setUser, setUserName }) => {
           <Button onClick={() => setOpenLogin(true)}>Log In</Button>
         </div>
       )}
-      <SignupDisplay
-        setOpen={setOpen}
-        open={open}
-        setUser={setUser}
-      />
+      <SignupDisplay setOpen={setOpen} open={open} setUser={setUser} />
       <LoginDisplay
         setOpenLogin={setOpenLogin}
         openLogin={openLogin}
