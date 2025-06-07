@@ -28,7 +28,6 @@ const AuthDisplay = ({ user, setUser, setUserName }) => {
         setOpen={setOpen}
         open={open}
         setUser={setUser}
-        setUserName={setUserName}
       />
       <LoginDisplay
         setOpenLogin={setOpenLogin}

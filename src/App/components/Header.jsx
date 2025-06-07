@@ -8,7 +8,7 @@ const Header = ({ user, setUser, setUserName }) => {
         alt="headerImage"
         className="app__headerImage"
       />
-      <AuthDisplay user={user} setUser={setUser} setUserName={setUserName} />
+      <AuthDisplay user={user} setUser={setUser} />
     </div>
   );
 };
