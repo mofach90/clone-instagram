@@ -32,10 +32,9 @@ function Post({ user, postData }) {
         setComments(commentsData);
       });
     }
-    console.log("iam iout");
-  }, [postData.postId]); // The dependency array is correct, re-running when postId changes.
-  const handelSubmitComment = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+  }, [postData.postId]);
+  const handelSubmitComment = async (e) => {
+    e.preventDefault();
     if (comment.trim() === "") {
       alert("Comment cannot be empty");
       return;
@@ -46,23 +45,25 @@ function Post({ user, postData }) {
       postData.postId,
       "comments"
     );
-    addDoc(commentsCollectionRef, {
-      userName: user?.displayName || "Anonymous", // Use displayName or fallback to "Anonymous"
-      text: comment,
-      Timestamp: Timestamp.now(), // Add a timestamp for the comment
-    })
-      .then(() => {
-        console.log("Comment added successfully");
-        setComment(""); // Clear the comment input after submission
-      })
-      .catch((error) => {
-        console.error("Error adding comment: ", error);
+    try {
+      await addDoc(commentsCollectionRef, {
+        userName: user?.displayName,
+        text: comment,
+        Timestamp: Timestamp.now(),
       });
+      setComment("");
+    } catch (error) {
+      console.error("Error adding comment: ", error);
+    }
   };
   return (
     <div className="post">
       <div className="post__header">
-        <Avatar className="post__avatar" alt="Remy Sharp" src={postData.avatarImage} />
+        <Avatar
+          className="post__avatar"
+          alt="Remy Sharp"
+          src={postData.avatarImage}
+        />
         <h3>Username</h3>
       </div>
       <img className="post__image" src={postData.postImage} alt="Post" />
@@ -76,6 +77,7 @@ function Post({ user, postData }) {
           </p>
         ))}
       </div>
+      {/* only users can comment */}
       {user ? (
         <form className="post__commentBox">
           <input
