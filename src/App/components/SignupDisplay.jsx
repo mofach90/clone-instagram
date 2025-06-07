@@ -11,23 +11,21 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
 
-  const signUp = (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
-        setUser(user);
-        return updateProfile(auth.currentUser, {
-          displayName: userName,
-        });
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
-        alert(errorMessage);
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      await updateProfile(auth.currentUser, {
+        displayName: userName,
       });
-    setOpen(false);
+      setUser(userCredential.user);
+      setOpen(false);
+      
+    } catch (error) {
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      alert(errorMessage);
+    }
   };
   return (
     <Modal
