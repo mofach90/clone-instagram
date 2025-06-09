@@ -19,7 +19,7 @@ function Post({ user, postData }) {
     if (postData.postId) {
       const commentsCollectionRef = query(
         collection(db, "first-collection", postData.postId, "comments"),
-        orderBy("Timestamp", "desc")
+        orderBy("timestamp", "desc")
       );
       onSnapshot(commentsCollectionRef, (querySnapshot) => {
         const commentsData = querySnapshot.docs.map((doc) => {
@@ -49,7 +49,7 @@ function Post({ user, postData }) {
       await addDoc(commentsCollectionRef, {
         userName: user?.displayName,
         text: comment,
-        Timestamp: Timestamp.now(),
+        timestamp: Timestamp.now(),
       });
       setComment("");
     } catch (error) {
