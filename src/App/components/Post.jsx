@@ -14,6 +14,7 @@ import "../../styles/post.css";
 function Post({ user, postData }) {
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (postData.postId) {
@@ -36,7 +37,7 @@ function Post({ user, postData }) {
   const handleSubmitComment = async (e) => {
     e.preventDefault();
     if (comment.trim() === "") {
-      alert("Comment cannot be empty");
+      setErrorMessage("Comment cannot be empty");
       return;
     }
     const commentsCollectionRef = collection(
@@ -78,6 +79,7 @@ function Post({ user, postData }) {
         ))}
       </div>
       {/* only users can comment */}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       {user ? (
         <form className="post__commentBox">
           <input
