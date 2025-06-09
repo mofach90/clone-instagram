@@ -33,7 +33,7 @@ function Post({ user, postData }) {
       });
     }
   }, [postData.postId]);
-  const handelSubmitComment = async (e) => {
+  const handleSubmitComment = async (e) => {
     e.preventDefault();
     if (comment.trim() === "") {
       alert("Comment cannot be empty");
@@ -90,7 +90,7 @@ function Post({ user, postData }) {
           <button
             className="comment__button"
             type="submit"
-            onClick={handelSubmitComment}
+            onClick={handleSubmitComment}
           >
             Submit
           </button>
