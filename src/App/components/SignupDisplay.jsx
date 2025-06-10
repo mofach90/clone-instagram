@@ -11,7 +11,7 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-
+  const handleSignUp = async (e) => {
   const signUp = async (e) => {
     e.preventDefault();
     try {
@@ -59,7 +59,7 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          <Button type="submit" onClick={handleSignUp}>
           <Button type="submit" onClick={signUp}>
           {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
           <Button type="submit" onClick={signUp}>
