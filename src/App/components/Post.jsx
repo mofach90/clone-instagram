@@ -65,7 +65,7 @@ function Post({ user, postData }) {
           alt="Remy Sharp"
           src={postData.avatarImage}
         />
-        <h3>Username</h3>
+        <h3>{postData.userName}</h3>
       </div>
       <img className="post__image" src={postData.postImage} alt="Post" />
       <h4 className="post__text">
