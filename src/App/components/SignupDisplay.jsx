@@ -10,30 +10,26 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const handleSignUp = async (e) => {
+
   const signUp = async (e) => {
     e.preventDefault();
     try {
       if (!email || !password) {
-      if (auth.currentUser) {
-        await updateProfile(auth.currentUser, {
-          displayName: userName,
-        });
-      } else {
-        throw new Error("User not authenticated. Unable to update profile.");
+        alert("Email and password cannot be empty.");
+        return;
       }
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName: userName,
       });
-      console.log(error.message);
-      alert(error.message);
+      setUser(userCredential.user);
+      setOpen(false);
+      
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
       alert(errorMessage);
-      setErrorMessage(errorMessage);
+    }
   };
   return (
     <Modal
@@ -59,12 +55,11 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <Button type="submit" onClick={handleSignUp}>
-          <Button type="submit" onClick={signUp}>
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+
           <Button type="submit" onClick={signUp}>
             Sign Up
           </Button>
+        </form>
       </Box>
     </Modal>
   );
