@@ -69,14 +69,16 @@ function Post({ user, postData }) {
       </div>
       <img className="post__image" src={postData.postImage} alt="Post" />
       <h4 className="post__text">
-        <strong>{postData.userName}</strong> : {postData.caption}
+        <strong>{postData.userName}</strong> : <strong>{postData.caption}</strong>
       </h4>
       <div className="post__comments">
-        {comments.map((comment) => (
-          <p key={comment.id} className="post__comment">
-            <strong>{comment.userName}</strong> : {comment.text}
-          </p>
-        ))}
+        {React.memo(() =>
+          comments.map((comment) => (
+            <p key={comment.id} className="post__comment">
+              <strong>{comment.userName}</strong> : {comment.text}
+            </p>
+          ))
+        )}
       </div>
       {/* only users can comment */}
       {errorMessage && <p className="error-message">{errorMessage}</p>}
