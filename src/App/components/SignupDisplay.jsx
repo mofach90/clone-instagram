@@ -14,7 +14,11 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const signUp = async (e) => {
     e.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+      if (!email || !password) {
+        alert("Email and password cannot be empty.");
+        return;
+      }
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(auth.currentUser, {
         displayName: userName,
       });
