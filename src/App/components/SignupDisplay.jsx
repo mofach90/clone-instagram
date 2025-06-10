@@ -26,9 +26,8 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
       await updateProfile(auth.currentUser, {
         displayName: userName,
       });
-      setUser(userCredential.user);
-      setOpen(false);
-      
+      console.log(error.message);
+      alert(error.message);
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
