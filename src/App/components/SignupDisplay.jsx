@@ -10,6 +10,7 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -32,7 +33,7 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
       const errorMessage = error.message;
       console.log(errorMessage);
       alert(errorMessage);
-    }
+      setErrorMessage(errorMessage);
   };
   return (
     <Modal
@@ -60,9 +61,10 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
           />
 
           <Button type="submit" onClick={signUp}>
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+          <Button type="submit" onClick={signUp}>
             Sign Up
           </Button>
-        </form>
       </Box>
     </Modal>
   );
