@@ -48,7 +48,7 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
       aria-labelledby="modal-modal-title"
           <Input
             type="text"
-            placeholder="Username"
+            placeholder="Display Name"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
