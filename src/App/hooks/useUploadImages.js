@@ -6,12 +6,17 @@ import { toast } from "react-toastify";
 const DEFAULT_CAPTION = "No Caption";
 
 const useUploadImages = ({ user, folderName = "images" }) => {
-  const [caption, setCaption] = useState("");
-  const [image, setImage] = useState(null);
-  const [progress, setProgress] = useState(0);
+  const [uploadState, setUploadState] = useState({
+    caption: "",
+    image: null,
+    progress: 0,
+  });
   const handelChange = (e) => {
     if (e.target.files[0]) {
-      setImage(e.target.files[0]);
+      setUploadState((prevState) => ({
+        ...prevState,
+        image: e.target.files[0],
+      }));
     }
   };
   const handleUpload = () => {
@@ -43,16 +48,24 @@ const useUploadImages = ({ user, folderName = "images" }) => {
               user_name: user?.displayName ?? "Anonymous",
             });
             console.log("Document written with ID: ", docRef.id);
-            setCaption("");
-            setImage(null);
-            setProgress(0);
+            setUploadState({
+              caption: "",
+              image: null,
+              progress: 0,
+            });
             console.log("Image uploaded successfully");
           });
         }
       );
     }
   };
-  return { handelChange, handleUpload, progress, setCaption };
+  return {
+    handelChange,
+    handleUpload,
+    progress: uploadState.progress,
+    setCaption: (caption) =>
+      setUploadState((prevState) => ({ ...prevState, caption })),
+  };
 };
 
 export default useUploadImages;
