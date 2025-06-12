@@ -34,7 +34,11 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   return (
     <Modal
       open={open}
-      onClose={() => setOpen(false)}
+      onClose={() => {
+        if (window.confirm("Are you sure you want to close the modal? Unsaved changes will be lost.")) {
+          setOpen(false);
+        }
+      }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
