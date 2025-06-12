@@ -3,7 +3,9 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { db, storage } from "../../config/firebase.js";
 import { toast } from "react-toastify";
-const useUploadImages = ({ user, folderName = "images", collectionName = "first-collection" }) => {
+const DEFAULT_CAPTION = "No Caption";
+
+const useUploadImages = ({ user, folderName = "images" }) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -37,7 +39,7 @@ const useUploadImages = ({ user, folderName = "images", collectionName = "first-
             const docRef = await addDoc(collection(db, "first-collection"), {
               timestamp: Timestamp.now(),
               caption: caption ?? "No Caption",
-              image_url: downloadURL,
+              caption: caption ?? DEFAULT_CAPTION,
               user_name: user?.displayName ?? "Anonymous",
             });
             console.log("Document written with ID: ", docRef.id);
