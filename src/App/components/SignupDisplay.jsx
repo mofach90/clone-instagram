@@ -11,11 +11,16 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const signUp = async (e) => {
     e.preventDefault();
+    if (loading) return;
+    setLoading(true);
     try {
       if (!email || !password) {
         alert("Email and password cannot be empty.");
+        setLoading(false);
         return;
       }
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
@@ -24,11 +29,12 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
       });
       setUser(userCredential.user);
       setOpen(false);
-      
     } catch (error) {
       const errorMessage = error.message;
       console.log(errorMessage);
       alert(errorMessage);
+    } finally {
+      setLoading(false);
     }
   };
   return (
@@ -60,9 +66,9 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
           />
             type="password"
             placeholder="Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
+          <Button type="submit" onClick={signUp} disabled={loading}>
+            {loading ? "Signing Up..." : "Sign Up"}
+          </Button>
           <Button type="submit" onClick={signUp}>
             Sign Up
           </Button>
