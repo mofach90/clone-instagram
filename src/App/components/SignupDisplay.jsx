@@ -40,21 +40,24 @@ const SignupDisplay = ({ open, setOpen, setUser }) => {
         }
       }}
       aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-        <form className="app__signup">
           <Input
             type="text"
             placeholder="Username"
+            value={userName}
             onChange={(e) => setUserName(e.target.value)}
           />
           <Input
             type="text"
             placeholder="Email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
             type="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
