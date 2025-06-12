@@ -2,6 +2,7 @@ import { Timestamp, addDoc, collection } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { db, storage } from "../../config/firebase.js";
+import { toast } from "react-toastify";
 
 const useUploadImages = ({ user }) => {
   const [caption, setCaption] = useState("");
@@ -14,7 +15,7 @@ const useUploadImages = ({ user }) => {
   };
   const handleUpload = () => {
     if (!image) {
-      alert("Please select an image to upload");
+      toast.error("Please select an image to upload");
       return;
     } else {
       const storageRef = ref(storage, `images/${image.name}`);
