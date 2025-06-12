@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "../../config/firebase.js";
-import { style } from "../../styles/styles.js";
+import { style } from "../../styles/styles.js"; // Ensure this file contains the correct style object
 
 const SignupDisplay = ({ open, setOpen, setUser }) => {
   const [email, setEmail] = useState("");
