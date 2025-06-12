@@ -30,6 +30,7 @@ const useUploadImages = ({ user }) => {
         },
         (error) => {
           console.error("Error uploading image:", error);
+          toast.error("Failed to upload image. Please try again.");
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
