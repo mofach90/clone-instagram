@@ -3,8 +3,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useState } from "react";
 import { db, storage } from "../../config/firebase.js";
 import { toast } from "react-toastify";
-const useUploadImages = ({ user, folderName = "images" }) => {
-const useUploadImages = ({ user }) => {
+const useUploadImages = ({ user, folderName = "images", collectionName = "first-collection" }) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
@@ -34,7 +33,7 @@ const useUploadImages = ({ user }) => {
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            console.log("File available at", downloadURL);
+            const docRef = await addDoc(collection(db, collectionName), {
             const docRef = await addDoc(collection(db, "first-collection"), {
               timestamp: Timestamp.now(),
               caption: caption ?? "No Caption",
