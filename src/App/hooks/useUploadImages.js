@@ -38,7 +38,7 @@ const useUploadImages = ({ user, folderName = "images" }) => {
             const docRef = await addDoc(collection(db, collectionName), {
             const docRef = await addDoc(collection(db, "first-collection"), {
               timestamp: Timestamp.now(),
-              caption: caption ?? "No Caption",
+              user_name: user ? user.displayName ?? "Anonymous" : "Anonymous",
               caption: caption ?? DEFAULT_CAPTION,
               user_name: user?.displayName ?? "Anonymous",
             });
