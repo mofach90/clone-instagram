@@ -7,7 +7,7 @@ const useUploadImages = ({ user }) => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setProgress] = useState(0);
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     if (e.target.files[0]) {
       setImage(e.target.files[0]);
     }
@@ -49,7 +49,7 @@ const useUploadImages = ({ user }) => {
       );
     }
   };
-  return { handelChange, handleUpload, progress, setCaption };
+  return { handleChange, handleUpload, progress, setCaption };
 };
 
 export default useUploadImages;
