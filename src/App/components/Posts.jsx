@@ -13,7 +13,6 @@ const Posts = ({ user }) => {
       orderBy("timestamp", "desc")
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
-      console.log("Fetching posts...");
       const fetchedPosts = snapshot.docs.map((doc) => {
         const data = doc.data();
         const post = {
@@ -25,9 +24,7 @@ const Posts = ({ user }) => {
         };
         return post;
       });
-      console.log("Debug Me");
       setPosts(fetchedPosts);
-      console.log("Posts fetched successfully:", fetchedPosts);
     },(error) => {
       console.log(error);
     }
